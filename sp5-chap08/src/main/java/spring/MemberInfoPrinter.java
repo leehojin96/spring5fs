@@ -5,15 +5,17 @@ public class MemberInfoPrinter {
 	private MemberDao memDao;
 	private MemberPrinter printer;
 
-	public void printMemberInfo(String email) {
+	public boolean printMemberInfo(String email) {
 		Member member = memDao.selectByEmail(email);
 		if (member == null) {
 			System.out.println("데이터 없음\n");
-			return;
+			return true;
 		}
 		printer.print(member);
-		System.out.println();
+		return false;
 	}
+	
+	
 
 	public void setMemberDao(MemberDao memberDao) {
 		this.memDao = memberDao;

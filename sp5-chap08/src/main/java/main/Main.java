@@ -112,6 +112,7 @@ public class Main {
 		System.out.println("new 이메일 이름 암호 암호확인");
 		System.out.println("change 이메일 현재비번 변경비번");
 		System.out.println("info 이메일");
+		System.out.println("list");
 
 		System.out.println();
 	}

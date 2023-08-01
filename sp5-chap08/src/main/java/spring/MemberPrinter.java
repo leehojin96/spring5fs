@@ -8,5 +8,9 @@ public class MemberPrinter {
 				member.getId(), member.getEmail(),
 				member.getName(), member.getRegisterDateTime());
 	}
+	
+	public void printPw(Member member) {
+		System.out.printf("회원 정보: 비밀번호=%s",member.getPassword());;
+	}
 
 }

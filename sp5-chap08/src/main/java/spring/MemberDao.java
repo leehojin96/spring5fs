@@ -92,5 +92,6 @@ public class MemberDao {
 				"select count(*) from MEMBER", Integer.class);
 		return count;
 	}
+	
 
 }
