@@ -3,7 +3,7 @@ package main;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import config.AppCtx;
-import spring.ChangePasswordService;
+import spring.MemberService;
 import spring.MemberNotFoundException;
 import spring.WrongIdPasswordException;
 
@@ -13,7 +13,7 @@ public class MainForCPS {
 
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppCtx.class);
 
-		ChangePasswordService cps = ctx.getBean("changePwdSvc", ChangePasswordService.class);
+		MemberService cps = ctx.getBean("changePwdSvc", MemberService.class);
 
 		try {
 		

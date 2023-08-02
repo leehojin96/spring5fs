@@ -7,12 +7,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import spring.ChangePasswordService;
+import spring.MemberService;
 import spring.MemberDao;
 import spring.MemberInfoPrinter;
 import spring.MemberListPrinter;
 import spring.MemberPrinter;
-import spring.MemberRegisterService;
 
 @Configuration
 @EnableTransactionManagement
@@ -44,17 +43,10 @@ public class AppCtx {
 	public MemberDao memberDao() {
 		return new MemberDao(dataSource());
 	}
-
-	@Bean
-	public MemberRegisterService memberRegSvc() {
-		return new MemberRegisterService(memberDao()) ;
-	}
 	
 	@Bean
-	public ChangePasswordService changePwdSvc() {
-		ChangePasswordService pwdSvc = new ChangePasswordService();
-		pwdSvc.setMemberDao(memberDao());
-		return pwdSvc;
+	public MemberService memberService() {
+		return new MemberService();
 	}
 	
 	@Bean

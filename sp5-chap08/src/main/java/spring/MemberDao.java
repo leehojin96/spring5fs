@@ -93,5 +93,9 @@ public class MemberDao {
 		return count;
 	}
 	
+	public void removeMember(Member member) {
+		jdbcTemplate.update("DELETE FROM MEMBER WHERE ID = ?",member.getId());
+	}
+
 
 }

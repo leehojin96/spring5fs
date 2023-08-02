@@ -18,6 +18,14 @@ public class Member {
 		this.registerDateTime = regDateTime;
 	}
 
+	public Member(Long id, String email, String password) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+	}
+
+
+
 	void setId(Long id) {
 		this.id = id;
 	}

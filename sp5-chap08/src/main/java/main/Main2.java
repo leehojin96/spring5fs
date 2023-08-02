@@ -8,13 +8,13 @@ import java.util.DuplicateFormatFlagsException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import config.AppCtx;
-import spring.ChangePasswordService;
 import spring.MemberInfoPrinter;
 import spring.MemberListPrinter;
 import spring.MemberNotFoundException;
-import spring.MemberRegisterService;
+import spring.MemberService;
 import spring.RegisterRequest;
 import spring.WrongIdPasswordException;
+import spring.WrongIdPwdNameException;
 
 public class Main2 {
 
@@ -40,12 +40,29 @@ public class Main2 {
 				processListCommand();
 			} else if (command.startsWith("info")) {
 				processInfoCommand(command.split(" "));
-					System.out.println("");
+			} else if (command.startsWith("remove ")) {
+				processRemoveCommand(command.split(" "));
 			} else {
 				printHelp();
 			}
 		}
 		ctx.close();
+	}
+
+	private static void processRemoveCommand(String[] arg) {
+		if (arg.length != 4) {
+			printHelp();
+			return;
+		} 
+		MemberService memberService = ctx.getBean("memberService", MemberService.class);
+		try {
+			memberService.removeMember(Long.valueOf(arg[1]) , arg[2], arg[3]);
+			System.out.println("회원 정보가 삭제 되었습니다.\n");
+		} catch (WrongIdPwdNameException e) {
+			System.out.println("정보가 일치하지 않습니다.\n");
+		} catch (NumberFormatException e) {
+			System.out.println("정보가 일치하지 않습니다.\n");
+		}
 	}
 
 	private static void processChangeCommand(String[] arg) {
@@ -54,10 +71,10 @@ public class Main2 {
 			return;
 		}
 
-		ChangePasswordService changePwdSvc = ctx.getBean("changePwdSvc", ChangePasswordService.class);
+		MemberService memberService = ctx.getBean("memberService", MemberService.class);
 
 		try {
-			changePwdSvc.changePassword(arg[1], arg[2], arg[3]);
+			memberService.changePassword(arg[1], arg[2], arg[3]);
 			System.out.println("암호를 변경했습니다.\n");
 		} catch (WrongIdPasswordException e) {
 			System.out.println("암호가 일치하지 않습니다.");
@@ -85,7 +102,7 @@ public class Main2 {
 			printHelp();
 			return;
 		}
-		MemberRegisterService regSvc = ctx.getBean("memberRegSvc", MemberRegisterService.class);
+		MemberService memberService = ctx.getBean("memberService", MemberService.class);
 		RegisterRequest req = new RegisterRequest();
 		req.setEmail(arg[1]);
 		req.setName(arg[2]);
@@ -97,7 +114,7 @@ public class Main2 {
 			return;
 		}
 		try {
-			regSvc.regist(req);
+			memberService.regist(req);
 			System.out.println("등록했습니다.\n");
 		} catch (DuplicateFormatFlagsException e) {
 			System.out.println("이미 존재하는 이메일입니다.\n");
@@ -111,6 +128,7 @@ public class Main2 {
 		System.out.println("new 이메일 이름 암호 암호확인");
 		System.out.println("change 이메일 현재비번 변경비번");
 		System.out.println("info 이메일");
+		System.out.println("remove 아이디 이메일 비밀번호");
 
 		System.out.println();
 	}
