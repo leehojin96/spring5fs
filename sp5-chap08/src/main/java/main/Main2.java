@@ -39,22 +39,8 @@ public class Main2 {
 			} else if (command.equals("list")) {
 				processListCommand();
 			} else if (command.startsWith("info")) {
-				if(processInfoCommand(command.split(" ")))
-					System.out.println();
-				else {
-				while (true) {
-					System.out.println("비밀번호를 알고 계십니까? (Y/N/BACK)");
-					command = reader.readLine();
-					if (command.equals("Y") || command.equals("BACK"))
-						break;
-					else if (command.equals("N")) {
-						System.out.println("이름을 입력하세요:");
-						command = reader.readLine();
-						
-					} else {
-						System.out.println();
-					}}
-				}
+				processInfoCommand(command.split(" "));
+					System.out.println("");
 			} else {
 				printHelp();
 			}
@@ -80,16 +66,13 @@ public class Main2 {
 		}
 	}
 
-	private static boolean processInfoCommand(String[] arg) {
+	private static void processInfoCommand(String[] arg) {
 		if (arg.length != 2) {
 			printHelp();
-			return true;
 		}
 
 		MemberInfoPrinter infoPrinter = ctx.getBean("infoPrinter", MemberInfoPrinter.class);
-
-		return infoPrinter.printMemberInfo(arg[1]);
-
+		infoPrinter.printMemberInfo(arg[1]);
 	}
 
 	private static void processListCommand() {
