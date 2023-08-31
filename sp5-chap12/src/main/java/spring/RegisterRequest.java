@@ -1,10 +1,19 @@
 package spring;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
 public class RegisterRequest {
 
+	//Bean Validator 사용
+	@NotNull
 	private String email;
+	@NotNull
 	private String password;
+	@NotNull
 	private String confirmPassword;
+	@NotNull
 	private String name;
 
 	public String getEmail() {
