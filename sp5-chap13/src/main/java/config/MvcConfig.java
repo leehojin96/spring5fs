@@ -5,14 +5,15 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.validation.Validator;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import controller.RegisterRequestValidator;
+import interceptor.AuthCheckInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -43,6 +44,18 @@ public class MvcConfig implements WebMvcConfigurer{
 		registry.addViewController("/main").setViewName("main");
 	}
 	
+	//인터셉터 경로설정
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(authCheckInterceptor()).addPathPatterns("/edit/**").excludePathPatterns("/edit/help/**");
+	}
+	
+	//인터셉터
+	@Bean
+	public HandlerInterceptor authCheckInterceptor() {
+		return new AuthCheckInterceptor();
+	}
+
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource ms = new ResourceBundleMessageSource();

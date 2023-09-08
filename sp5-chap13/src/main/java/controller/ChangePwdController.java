@@ -25,9 +25,12 @@ public class ChangePwdController {
 
 	@GetMapping
 	public String form(@ModelAttribute("command")ChangePwdCommand pwdCmd,HttpSession session) {
+		/**
+		 * 인터셉터 구현으로 인해 각 컨트롤에 구현 안해도 됨
 		AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
 		if(authInfo==null)
 			return "redirect:/login";
+		**/
 		return "edit/changePwdForm";
 	}
 
